@@ -1,4 +1,4 @@
-const CACHE_NAME='clocalc-y-te-v1.2.0';
+const CACHE_NAME='clocalc-y-te-v1.3.0';
 const APP_FILES=[
   './',
   './index.html',
