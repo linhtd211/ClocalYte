@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#075c58">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CloCalc">
+  <meta name="description" content="Công cụ tính pha hóa chất chứa clo cho xử lý nước mùa mưa lũ và khử khuẩn y tế.">
+  <title>CloCalc Y tế</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23075c58'/%3E%3Cpath d='M32 8C25 18 16 28 16 41a16 16 0 0032 0C48 28 39 18 32 8Z' fill='%23c7f3e9'/%3E%3Cpath d='M29 27h6v9h9v6h-9v9h-6v-9h-9v-6h9Z' fill='%23075c58'/%3E%3Ccircle cx='49' cy='15' r='6' fill='%23f3aa36'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    :root{--ink:#123331;--muted:#59706e;--line:#d7e4e2;--paper:#fff;--wash:#eff8f6;--brand:#075c58;--brand2:#0e7b73;--accent:#ec9f2e;--danger:#a9392d;--shadow:0 16px 42px rgba(12,71,67,.10);--radius:20px}
+    *{box-sizing:border-box}html{font-size:16px;scroll-behavior:smooth}body{margin:0;background:linear-gradient(135deg,#e8f6f3 0,#f8fbfa 45%,#eef4f3 100%);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5;min-height:100vh}
+    button,input,select{font:inherit}button{cursor:pointer}.app{max-width:1180px;margin:auto;padding:22px 20px 56px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px}.mark{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;overflow:hidden;box-shadow:0 8px 20px rgba(7,92,88,.23)}.mark svg{width:100%;height:100%;display:block}h1{font-size:1.28rem;margin:0;letter-spacing:-.02em}.brand small{display:block;color:var(--muted);font-size:.78rem;margin-top:1px}.offline{font-size:.8rem;color:var(--brand);background:#dcf3ed;border:1px solid #bde3d9;padding:7px 11px;border-radius:999px;font-weight:700}
+    .shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:18px}.nav{background:rgba(255,255,255,.78);backdrop-filter:blur(12px);border:1px solid rgba(215,228,226,.9);border-radius:var(--radius);padding:10px;height:max-content;position:sticky;top:16px;box-shadow:var(--shadow)}.nav button{width:100%;border:0;background:transparent;color:var(--muted);padding:13px 14px;border-radius:13px;text-align:left;font-weight:720;display:flex;align-items:center;gap:10px;margin:2px 0}.nav button.active{background:var(--brand);color:#fff}.nav .ico{width:25px;text-align:center}.content{min-width:0}.panel{display:none}.panel.active{display:block}.heading{margin:2px 0 18px}.heading h2{margin:0 0 4px;font-size:1.7rem;letter-spacing:-.035em}.heading p{margin:0;color:var(--muted)}
+    .workspace{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(310px,.92fr);gap:18px;align-items:start}.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}.card h3{margin:0 0 16px;font-size:1.05rem}.section-title{font-size:.77rem;font-weight:850;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin:0 0 12px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{min-width:0}.field.full{grid-column:1/-1}.field label{display:block;font-size:.85rem;font-weight:750;margin-bottom:6px;color:#294b48}.control{width:100%;min-height:46px;border:1px solid #c9dad7;border-radius:12px;background:#fbfdfd;padding:10px 12px;color:var(--ink);outline:none}.control:focus{border-color:var(--brand2);box-shadow:0 0 0 3px rgba(14,123,115,.12)}.control:disabled{background:#edf3f2;color:#48615f;border-color:#d5e0de;cursor:not-allowed;opacity:1}.suffix-wrap{position:relative}.suffix-wrap .control{padding-right:55px}.suffix{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.82rem;font-weight:700}.hint{display:block;color:var(--muted);font-size:.76rem;margin-top:5px}.segmented{display:flex;gap:6px;padding:5px;background:var(--wash);border-radius:14px;margin-bottom:17px}.segmented button{flex:1;border:0;background:transparent;padding:10px;border-radius:10px;color:var(--muted);font-weight:750}.segmented button.active{background:white;color:var(--brand);box-shadow:0 4px 12px rgba(8,75,71,.10)}
+    .result{background:linear-gradient(145deg,#075c58,#0a716b);color:#fff;border:0;position:sticky;top:16px;overflow:hidden}.result:after{content:"Cl";position:absolute;right:-10px;top:-38px;font-size:9rem;font-weight:900;opacity:.055;line-height:1}.result h3{color:#ccefe7;position:relative}.result-main{font-size:2.35rem;font-weight:880;line-height:1.04;letter-spacing:-.05em;margin:10px 0 4px;position:relative}.result-unit{color:#ccefe7;font-size:.88rem;margin-bottom:18px}.result-list{margin:0;padding:0;list-style:none;position:relative}.result-list li{padding:9px 0;border-top:1px solid rgba(255,255,255,.16);display:grid;grid-template-columns:110px 1fr;gap:10px;font-size:.88rem}.result-list span{color:#bfe5dd}.result-list strong{font-weight:730}.btnrow{display:flex;gap:9px;margin-top:17px;position:relative}.btn{border:0;border-radius:12px;padding:11px 14px;font-weight:800}.btn.light{background:#fff;color:var(--brand)}.btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.22)}.btn.primary{background:var(--brand);color:white}.notice{margin-top:16px;border-radius:15px;padding:13px 15px;background:#fff7e8;border:1px solid #efd7a7;color:#694817;font-size:.86rem}.notice.danger{background:#fff0ee;border-color:#efc5c0;color:#762d25}.notice strong{display:block;margin-bottom:2px}.formula{margin-top:16px;padding:13px 15px;border:1px dashed #b8d1cd;background:#f7fbfa;border-radius:14px;color:#385956;font-size:.86rem}.formula code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--brand);font-weight:700}.scenario{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.scenario button{border:1px solid var(--line);background:#fff;border-radius:14px;text-align:left;padding:13px;color:var(--ink);min-height:78px}.scenario button strong{display:block;font-size:.9rem}.scenario button small{color:var(--muted)}.scenario button.active{border-color:var(--brand2);box-shadow:inset 0 0 0 1px var(--brand2);background:#f1faf8}.divider{height:1px;background:var(--line);margin:18px 0}.source-card{border-left:4px solid var(--brand2)}.source-card h3{margin-bottom:7px}.source-card p{color:var(--muted);margin:0 0 12px}.source-card a{color:var(--brand);font-weight:750;text-decoration:none}.source-card a:hover{text-decoration:underline}.sources{display:grid;gap:12px}.safety{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.safety div{background:#f8fbfa;border:1px solid var(--line);border-radius:13px;padding:12px;font-size:.84rem}.pill{display:inline-flex;background:#e2f4ef;color:var(--brand);font-weight:800;border-radius:999px;padding:4px 9px;font-size:.73rem;margin-bottom:8px}.hidden{display:none!important}.error{color:var(--danger);font-size:.82rem;font-weight:700;margin-top:8px;display:none}.muted{color:var(--muted)}
+    @media(max-width:850px){.shell{grid-template-columns:1fr}.nav{position:static;display:flex;overflow:auto;padding:7px}.nav button{min-width:max-content;width:auto;margin:0}.workspace{grid-template-columns:1fr}.result{position:static}.heading h2{font-size:1.45rem}.offline{display:none}}
+    @media(max-width:560px){.app{padding:14px 12px 40px}.topbar{margin-bottom:12px}.brand small{display:none}.mark{width:41px;height:41px}.nav .label{font-size:.82rem}.card{padding:16px;border-radius:17px}.fields,.scenario,.safety{grid-template-columns:1fr}.field.full{grid-column:auto}.result-main{font-size:2rem}.result-list li{grid-template-columns:94px 1fr}.btnrow{flex-direction:column}.btn{width:100%}}
+    @media print{body{background:#fff}.app{max-width:none;padding:0}.topbar,.nav,.heading,.input-card,.btnrow,.notice{display:none!important}.shell,.workspace{display:block}.panel{display:none!important}.panel.active{display:block!important}.result{display:block;color:#111;background:#fff;border:1px solid #555;box-shadow:none;position:static}.result h3,.result-unit,.result-list span{color:#333}.result-list li{border-color:#bbb}.result:after{display:none}.print-only{display:block!important}}
+  </style>
+</head>
+<body>
+<main class="app">
+  <header class="topbar">
+    <div class="brand"><div class="mark" aria-hidden="true"><svg viewBox="0 0 64 64" role="img"><defs><linearGradient id="miniBg" x1="8" y1="5" x2="57" y2="60"><stop stop-color="#0b7d76"/><stop offset="1" stop-color="#043e42"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="url(#miniBg)"/><path d="M32 8C25 18 16 28 16 41a16 16 0 0 0 32 0C48 28 39 18 32 8Z" fill="#c7f3e9"/><path d="M29 27h6v9h9v6h-9v9h-6v-9h-9v-6h9Z" fill="#075c58"/><circle cx="50" cy="15" r="6" fill="#f3aa36"/><path d="M50 12v6M47 15h6" stroke="#fff7e8" stroke-width="2" stroke-linecap="round"/></svg></div><div><h1>CloCalc Y tế</h1><small>Tính pha clo an toàn · dùng ngoại tuyến</small></div></div>
+    <div class="offline">● Không lưu dữ liệu</div>
+  </header>
+  <div class="shell">
+    <nav class="nav" aria-label="Chức năng">
+      <button class="active" data-tab="flood"><span class="ico">💧</span><span class="label">Nước mùa lũ</span></button>
+      <button data-tab="surface"><span class="ico">✦</span><span class="label">Bề mặt & ổ dịch</span></button>
+      <button data-tab="custom"><span class="ico">∑</span><span class="label">Pha tùy chỉnh</span></button>
+      <button data-tab="sources"><span class="ico">▤</span><span class="label">Hướng dẫn & nguồn</span></button>
+    </nav>
+    <div class="content">
+      <section class="panel active" id="flood">
+        <div class="heading"><h2>Xử lý nước mùa mưa lũ</h2><p>Chọn đúng tình huống, nhập thể tích và nhận hướng dẫn pha.</p></div>
+        <div class="workspace">
+          <div class="card input-card">
+            <p class="section-title">Tình huống xử lý</p>
+            <div class="segmented"><button class="active" data-flood-mode="container">Xô, chum, bể</button><button data-flood-mode="well">Giếng khơi</button></div>
+            <div id="containerFields">
+              <div class="fields">
+                <div class="field"><label for="waterVolume">Thể tích nước</label><div class="suffix-wrap"><input class="control" id="waterVolume" type="number" min="1" step="1" value="100"><span class="suffix">lít</span></div></div>
+                <div class="field"><label for="tabletCoverage">Một viên xử lý được</label><div class="suffix-wrap"><input class="control" id="tabletCoverage" type="number" min="1" step="1" value="25"><span class="suffix">lít</span></div></div>
+                <div class="field"><label for="tabletMass">Khối lượng mỗi viên</label><div class="suffix-wrap"><input class="control" id="tabletMass" type="number" min="0.001" step="0.01" value="0.25"><span class="suffix">g</span></div><small class="hint">Mặc định viên Cloramin B 250 mg</small></div>
+                <div class="field"><label for="floodContact">Thời gian chờ</label><div class="suffix-wrap"><input class="control" id="floodContact" type="number" min="1" value="30"><span class="suffix">phút</span></div></div>
+                <div class="field full"><label for="containerAlumDose">Làm trong nước bằng phèn chua</label><select class="control" id="containerAlumDose"><option value="0.05" selected>1 g/20 lít nước · hướng dẫn thông thường</option><option value="0">Nước đã trong · không tính phèn chua</option></select><small class="hint">Hòa tan phèn trong một gáo nước, cho vào dụng cụ, khuấy đều và chờ lắng khoảng 30 phút.</small></div>
+              </div>
+              <div class="notice"><strong>Ưu tiên hướng dẫn trên nhãn</strong>Chỉ sử dụng chế phẩm xử lý nước sinh hoạt còn đăng ký lưu hành và còn hạn dùng.</div>
+            </div>
+            <div id="wellFields" class="hidden">
+              <div class="fields">
+                <div class="field"><label for="wellDiameter">Đường kính trong giếng</label><div class="suffix-wrap"><input class="control" id="wellDiameter" type="number" min="0.1" step="0.1" value="1.2"><span class="suffix">m</span></div></div>
+                <div class="field"><label for="wellDepth">Chiều sâu cột nước</label><div class="suffix-wrap"><input class="control" id="wellDepth" type="number" min="0.1" step="0.1" value="3"><span class="suffix">m</span></div></div>
+                <div class="field"><label for="wellDose">Liều Cloramin B</label><select class="control" id="wellDose"><option value="10">10 g/m³ · nước đã làm trong</option><option value="20">20 g/m³ · giới hạn trên</option></select><small class="hint">Hướng dẫn chuyên môn sử dụng khoảng 10–20 g/m³ tùy độ đục; mức 20 g/m³ cần cán bộ y tế lựa chọn.</small></div>
+                <div class="field"><label for="wellActive">Clo hoạt tính trên nhãn</label><div class="suffix-wrap"><input class="control" id="wellActive" type="number" min="1" max="100" step="0.1" value="25"><span class="suffix">%</span></div><small class="hint">Liều hướng dẫn tính theo khối lượng Cloramin B, không quy đổi sang hóa chất khác.</small></div>
+                <div class="field full"><label for="wellAlumDose">Liều phèn chua làm trong nước giếng</label><select class="control" id="wellAlumDose"><option value="50" selected>50 g/m³ · mức thông thường</option><option value="100">100 g/m³ · tối đa khi nước rất đục</option><option value="0">Đã làm trong · không tính phèn chua</option></select><small class="hint">Phải thau vét giếng trước; mức 100 g/m³ là giới hạn tối đa trong hướng dẫn tham khảo.</small></div>
+              </div>
+              <div class="notice"><strong>Phải thau rửa và làm trong trước</strong>Không đánh phèn và cho clo cùng lúc. Sau xử lý cần kiểm tra clo dư 0,3–0,5 mg/L nếu có bộ thử.</div>
+            </div>
+            <div class="error" id="floodError">Vui lòng nhập số lớn hơn 0.</div>
+          </div>
+          <aside class="card result" aria-live="polite">
+            <h3>Kết quả tính</h3><div class="result-main" id="floodMain">4 viên</div><div class="result-unit" id="floodSub">tương đương 1 g Cloramin B</div>
+            <ul class="result-list" id="floodList"></ul>
+            <div class="btnrow"><button class="btn light" onclick="window.print()">In hướng dẫn</button><button class="btn ghost" data-copy="flood">Sao chép</button></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="panel" id="surface">
+        <div class="heading"><h2>Bề mặt và xử lý ổ dịch</h2><p>Các kịch bản dưới đây dành cho bệnh truyền nhiễm nguy hiểm/ổ dịch, không thay thế quy trình thường quy của đơn vị.</p></div>
+        <div class="workspace">
+          <div class="card input-card">
+            <p class="section-title">Chọn mục đích</p>
+            <div class="scenario" id="scenarioButtons"></div>
+            <div class="divider"></div>
+            <div class="fields">
+              <div class="field"><label for="surfaceChem">Hóa chất</label><select class="control" id="surfaceChem"><option value="25">Cloramin B · 25%</option><option value="70">Canxi hypoclorit · 70%</option><option value="60">NaDCC · 60%</option><option value="custom">Hàm lượng khác</option></select></div>
+              <div class="field"><label for="surfaceActive">Clo hoạt tính thực tế</label><div class="suffix-wrap"><input class="control" id="surfaceActive" type="number" min="0.1" max="100" step="0.1" value="25" disabled><span class="suffix">%</span></div><small class="hint">Tự động khóa theo hóa chất; chọn “Hàm lượng khác” để nhập theo nhãn.</small></div>
+              <div class="field" id="surfaceVolumeField"><label for="surfaceVolume">Dung dịch cần pha</label><div class="suffix-wrap"><input class="control" id="surfaceVolume" type="number" min="0.1" step="0.5" value="10"><span class="suffix">lít</span></div></div>
+              <div class="field hidden" id="surfaceAreaField"><label for="surfaceArea">Diện tích cần phun</label><div class="suffix-wrap"><input class="control" id="surfaceArea" type="number" min="0.1" step="1" value="50"><span class="suffix">m²</span></div></div>
+              <div class="field hidden" id="coverageField"><label for="coverage">Mức phun</label><select class="control" id="coverage"><option value="0.3">0,3 lít/m²</option><option value="0.4" selected>0,4 lít/m²</option><option value="0.5">0,5 lít/m²</option></select></div>
+            </div>
+            <div class="notice danger"><strong>Không dùng để sát khuẩn tay hoặc da</strong>Không trộn với axit, giấm, chất tẩy bồn cầu hay amoniac. Làm sạch chất hữu cơ trước khi khử khuẩn.</div>
+            <div class="error" id="surfaceError">Dữ liệu không hợp lệ. Hãy kiểm tra thể tích, diện tích và hàm lượng clo.</div>
+          </div>
+          <aside class="card result" aria-live="polite"><h3>Kết quả pha</h3><div class="result-main" id="surfaceMain">200 g</div><div class="result-unit" id="surfaceSub">Cloramin B 25%</div><ul class="result-list" id="surfaceList"></ul><div class="btnrow"><button class="btn light" onclick="window.print()">In hướng dẫn</button><button class="btn ghost" data-copy="surface">Sao chép</button></div></aside>
+        </div>
+      </section>
+
+      <section class="panel" id="custom">
+        <div class="heading"><h2>Máy tính pha tùy chỉnh</h2><p>Dùng khi đã có nồng độ chuyên môn được phê duyệt và biết chính xác hàm lượng clo hoạt tính trên nhãn.</p></div>
+        <div class="workspace">
+          <div class="card input-card">
+            <div class="segmented"><button class="active" data-custom-mode="powder">Bột / hạt</button><button data-custom-mode="liquid">Dung dịch gốc</button><button data-custom-mode="tablet">Viên nén</button></div>
+            <div class="fields">
+              <div class="field"><label for="customTarget">Nồng độ cần pha</label><div class="suffix-wrap"><input class="control" id="customTarget" type="number" min="0.001" max="10" step="0.01" value="0.5"><span class="suffix">%</span></div><small class="hint" id="ppmHint">Tương đương 5.000 ppm</small></div>
+              <div class="field"><label for="customVolume">Thể tích thành phẩm</label><div class="suffix-wrap"><input class="control" id="customVolume" type="number" min="0.1" step="0.5" value="10"><span class="suffix">lít</span></div></div>
+              <div class="field"><label for="customActive">Clo hoạt tính của hóa chất</label><div class="suffix-wrap"><input class="control" id="customActive" type="number" min="0.1" max="100" step="0.1" value="25"><span class="suffix">%</span></div><small class="hint">Phải là “clo hoạt tính”, không tự coi % NaOCl là tương đương.</small></div>
+              <div class="field hidden" id="tabletMassField"><label for="customTabletMass">Khối lượng mỗi viên</label><div class="suffix-wrap"><input class="control" id="customTabletMass" type="number" min="0.001" step="0.01" value="0.25"><span class="suffix">g</span></div></div>
+            </div>
+            <div class="formula"><strong>Công thức:</strong> <code id="formulaText">m = (C × V ÷ A) × 1000</code><br><span id="formulaExplain">C: nồng độ cần pha (%); V: lít; A: % clo hoạt tính.</span></div>
+            <div class="notice"><strong>Với Javel/nước tẩy</strong>Chỉ dùng chế độ dung dịch khi nhãn ghi rõ phần trăm clo hoạt tính theo thể tích. Nếu nhãn ghi g/L, % khối lượng hoặc °Cl cần quy đổi theo tài liệu sản phẩm.</div>
+            <div class="error" id="customError">Dữ liệu không hợp lệ. Nồng độ cần pha phải thấp hơn nồng độ hóa chất gốc.</div>
+          </div>
+          <aside class="card result" aria-live="polite"><h3>Kết quả tính</h3><div class="result-main" id="customMain">200 g</div><div class="result-unit" id="customSub">hóa chất dạng bột</div><ul class="result-list" id="customList"></ul><div class="btnrow"><button class="btn light" onclick="window.print()">In kết quả</button><button class="btn ghost" data-copy="custom">Sao chép</button></div></aside>
+        </div>
+      </section>
+
+      <section class="panel" id="sources">
+        <div class="heading"><h2>Hướng dẫn chuyên môn và an toàn</h2><p>Nguồn được gắn trực tiếp với từng bộ tính để tránh dùng sai phạm vi.</p></div>
+        <div class="sources">
+          <article class="card source-card"><span class="pill">Nguồn hiện hành ưu tiên</span><h3>Cục Quản lý Môi trường Y tế – Bộ Y tế</h3><p>Sổ tay xử lý nước và vệ sinh môi trường mùa bão lụt kèm Công văn 480/MT-SKMT năm 2024: làm trong, khử khuẩn, lưu trữ nước an toàn; ưu tiên chế phẩm còn đăng ký và làm theo nhãn.</p><a href="https://thuvienphapluat.vn/banan/tin-tuc/so-tay-huong-dan-xu-ly-nuoc-an-toan-tam-thoi-dung-cho-sinh-hoat-trong-khi-ngap-lut-do-bao-yagi-11459.html" target="_blank" rel="noopener">Mở tài liệu tham chiếu ↗</a></article>
+          <article class="card source-card"><span class="pill">Xử lý nước cụ thể</span><h3>CDC Ninh Bình – hướng dẫn mùa bão lụt</h3><p>Liều viên Cloramin B 250 mg/25 lít; quy trình thau rửa, làm trong và khử khuẩn giếng; thời gian chờ và kiểm tra clo dư.</p><a href="https://cdc.ninhbinh.gov.vn/don-vi-trong-nganh/benh-vien-trong-tinh/huong-dan-xu-ly-nuoc-va-ve-sinh-moi-truong-mua-bao-lut.html" target="_blank" rel="noopener">Mở hướng dẫn ↗</a></article>
+          <article class="card source-card"><span class="pill">Pha hóa chất chứa clo</span><h3>CDC Quảng Ninh – nguồn Viện Vệ sinh dịch tễ Trung ương</h3><p>Công thức tính theo clo hoạt tính; bảng Cloramin B 25%, canxi hypoclorit 70%, NaDCC 60%; hướng dẫn xử lý bề mặt, dụng cụ, phương tiện và chất thải trong ổ dịch.</p><a href="https://www.quangninhcdc.vn/huong-dan-su-dung-cac-hoa-chat-khu-trung-chua-clo-trong-cong-tac-phong-chong-dich-47918/" target="_blank" rel="noopener">Mở hướng dẫn ↗</a></article>
+          <article class="card source-card"><span class="pill">Cơ sở khám chữa bệnh</span><h3>Quyết định 3916/QĐ-BYT ngày 28/8/2017</h3><p>Hướng dẫn vệ sinh môi trường bề mặt trong cơ sở khám bệnh, chữa bệnh. Khử khuẩn thường quy phải tuân theo quy trình của cơ sở và hướng dẫn sử dụng sản phẩm.</p><a href="https://syt.dongnai.gov.vn/vi/van-ban/detail/Huong-dan-ve-sinh-moi-truong-be-mat-trong-cac-co-so-kham-benh-chua-benh-740/" target="_blank" rel="noopener">Mở văn bản ↗</a></article>
+        </div>
+        <div class="card" style="margin-top:14px"><h3>Nguyên tắc an toàn bắt buộc</h3><div class="safety"><div>🧤 Mang găng và bảo vệ mắt; pha nơi thông thoáng.</div><div>⚠️ Không trộn clo với axit, amoniac hoặc chất tẩy khác.</div><div>🧼 Làm sạch chất bẩn hữu cơ trước khi khử khuẩn.</div><div>☀️ Pha đủ dùng trong ngày, đậy kín và tránh ánh sáng.</div><div>🚫 Không sát khuẩn tay, da, vết thương bằng dung dịch này.</div><div>🥤 Nước xử lý mùa lũ cần đun sôi trước khi uống.</div></div></div>
+      </section>
+    </div>
+  </div>
+</main>
+<script>
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  const fmt=(n,d=2)=>new Intl.NumberFormat('vi-VN',{maximumFractionDigits:d}).format(n);
+  const valid=(...xs)=>xs.every(x=>Number.isFinite(x)&&x>0);
+  let floodMode='container', customMode='powder', scenarioKey='surface';
+  const scenarios={
+    surface:{name:'Bề mặt trong ổ dịch',c:.5,contact:'Theo hướng dẫn từng bệnh',area:false,note:'Lau ướt toàn bộ bề mặt sau khi đã làm sạch.'},
+    basin:{name:'Bô, chậu ô nhiễm',c:.5,contact:'Ngâm ít nhất 30 phút',area:false,note:'Rửa lại bằng nước sạch sau thời gian tiếp xúc.'},
+    tools:{name:'Đồ dùng, quần áo',c:.5,contact:'Ngâm 1–2 giờ',area:false,note:'Chỉ áp dụng cho vật liệu chịu được clo; sau đó giặt/rửa sạch.'},
+    room:{name:'Khử khuẩn lần cuối',c:.5,contact:'Theo quy trình ổ dịch',area:true,note:'Phun 0,3–0,5 lít/m² lên nền, tường và bề mặt phù hợp.'},
+    vehicle:{name:'Phương tiện vận chuyển',c:.5,contact:'Để 1 giờ rồi rửa',area:true,note:'Phun 0,3–0,5 lít/m², tránh thiết bị điện và vật liệu dễ ăn mòn.'},
+    waste:{name:'Phân, chất thải',c:1.25,contact:'Ít nhất 30 phút',area:false,note:'Trộn dung dịch và chất thải theo tỷ lệ 1:1. Có thể dùng 1,25–2,5% theo hướng dẫn ổ dịch.'}
+  };
+  const chemNames={25:'Cloramin B 25%',70:'Canxi hypoclorit 70%',60:'NaDCC 60%',custom:'hóa chất đã chọn'};
+
+  function setList(id,rows){$(id).innerHTML=rows.map(([a,b])=>`<li><span>${a}</span><strong>${b}</strong></li>`).join('')}
+  function tabs(){
+    $$('.nav button').forEach(b=>b.addEventListener('click',()=>{$$('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');$$('.panel').forEach(x=>x.classList.remove('active'));$('#'+b.dataset.tab).classList.add('active');}));
+  }
+  function calcFlood(){
+    const err=$('#floodError');err.style.display='none';
+    if(floodMode==='container'){
+      const v=+$('#waterVolume').value, cover=+$('#tabletCoverage').value, mass=+$('#tabletMass').value, wait=+$('#floodContact').value, alumDose=+$('#containerAlumDose').value;
+      if(!valid(v,cover,mass,wait)){err.style.display='block';return}
+      const exact=v/cover, pills=Math.ceil(exact), grams=pills*mass, alum=v*alumDose;
+      $('#floodMain').textContent=`${fmt(pills,0)} viên`;$('#floodSub').textContent=`tương đương ${fmt(grams)} g hóa chất`;
+      const rows=[['Thể tích',`${fmt(v)} lít nước`]];
+      if(alumDose>0){
+        rows.push(['Phèn chua',`${fmt(alum,2)} g để làm trong nước`],['Cách làm trong','Hòa tan phèn trong một gáo nước, khuấy đều, chờ lắng 30 phút rồi gạn lấy nước trong']);
+      }else rows.push(['Làm trong','Nước đã trong, không tính phèn chua']);
+      rows.push(['Khử khuẩn',`Hòa tan ${fmt(pills,0)} viên Cloramin B sau khi nước đã trong`],['Chờ clo',`Ít nhất ${fmt(wait,0)} phút`],['Sau xử lý','Nước sinh hoạt; đun sôi trước khi uống'],['Căn cứ','Phèn 1 g/20 lít; viên mặc định 250 mg/25 lít']);
+      setList('#floodList',rows);
+    }else{
+      const d=+$('#wellDiameter').value,h=+$('#wellDepth').value,dose=+$('#wellDose').value,active=+$('#wellActive').value,alumDose=+$('#wellAlumDose').value;
+      if(!valid(d,h,dose,active)||active>100){err.style.display='block';return}
+      const volume=Math.PI*Math.pow(d/2,2)*h, grams=volume*dose, alum=volume*alumDose;
+      $('#floodMain').textContent=`${fmt(grams,1)} g`;$('#floodSub').textContent=`Cloramin B cho ${fmt(volume,2)} m³ nước`;
+      const rows=[['Thể tích giếng',`${fmt(volume,2)} m³ (${fmt(volume*1000,0)} lít)`]];
+      if(alumDose>0){
+        rows.push(['Phèn chua',`${fmt(alum,1)} g (${fmt(alumDose,0)} g/m³)`],['Làm trong','Tán nhỏ, hòa tan trong chậu; đổ đều, kéo gàu lên xuống khoảng 10 lần và chờ 30 phút']);
+      }else rows.push(['Làm trong','Đã hoàn thành, không tính phèn chua']);
+      rows.push(['Cloramin B',`${fmt(grams,1)} g (${fmt(dose,0)} g/m³)`],['Khử khuẩn','Chỉ cho clo sau khi nước đã lắng trong; hòa tan rồi phân bố đều trong giếng'],['Chờ clo','30 phút trước khi sử dụng'],['Kiểm tra','Mùi clo nhẹ; clo dư mục tiêu 0,3–0,5 mg/L'],['Lưu ý','Không đánh phèn và khử khuẩn bằng clo cùng lúc']);
+      setList('#floodList',rows);
+    }
+  }
+  function setupFlood(){
+    $$('[data-flood-mode]').forEach(b=>b.addEventListener('click',()=>{floodMode=b.dataset.floodMode;$$('[data-flood-mode]').forEach(x=>x.classList.toggle('active',x===b));$('#containerFields').classList.toggle('hidden',floodMode!=='container');$('#wellFields').classList.toggle('hidden',floodMode!=='well');calcFlood()}));
+    ['waterVolume','tabletCoverage','tabletMass','floodContact','containerAlumDose','wellDiameter','wellDepth','wellDose','wellActive','wellAlumDose'].forEach(id=>$('#'+id).addEventListener('input',calcFlood));calcFlood();
+  }
+  function renderScenarios(){
+    $('#scenarioButtons').innerHTML=Object.entries(scenarios).map(([k,s])=>`<button data-scenario="${k}" class="${k===scenarioKey?'active':''}"><strong>${s.name}</strong><small>${fmt(s.c,2)}% clo hoạt tính</small></button>`).join('');
+    $$('[data-scenario]').forEach(b=>b.addEventListener('click',()=>{scenarioKey=b.dataset.scenario;renderScenarios();calcSurface()}));
+  }
+  function calcSurface(){
+    const s=scenarios[scenarioKey], a=+$('#surfaceActive').value, area=+$('#surfaceArea').value, cov=+$('#coverage').value, manualV=+$('#surfaceVolume').value;
+    $('#surfaceAreaField').classList.toggle('hidden',!s.area);$('#coverageField').classList.toggle('hidden',!s.area);$('#surfaceVolumeField').classList.toggle('hidden',s.area);
+    const v=s.area?area*cov:manualV, err=$('#surfaceError');err.style.display='none';
+    if(!valid(a,v)||a>100){err.style.display='block';return}
+    const m=s.c*v/a*1000, selected=$('#surfaceChem').value, chem=selected==='custom'?`Hóa chất ${fmt(a)}% clo hoạt tính`:chemNames[selected];
+    $('#surfaceMain').textContent=`${fmt(m,1)} g`;$('#surfaceSub').textContent=`${chem} để pha ${fmt(v,1)} lít`;
+    const rows=[['Nồng độ',`${fmt(s.c,2)}% = ${fmt(s.c*10000,0)} ppm`],['Thành phẩm',`${fmt(v,1)} lít dung dịch`],['Tiếp xúc',s.contact],['Cách dùng',s.note],['Công thức',`(${fmt(s.c)} × ${fmt(v,1)} ÷ ${fmt(a)}) × 1.000`]];
+    if(s.area) rows.splice(2,0,['Diện tích',`${fmt(area)} m² × ${fmt(cov,1)} lít/m²`]);
+    if(scenarioKey==='waste') rows.splice(3,0,['Tỷ lệ','1 lít dung dịch : 1 lít chất thải']);
+    setList('#surfaceList',rows);
+  }
+  function setupSurface(){
+    const syncSurfaceChemical=()=>{
+      const selected=$('#surfaceChem').value, active=$('#surfaceActive'), isCustom=selected==='custom';
+      active.disabled=!isCustom;
+      if(!isCustom) active.value=selected;
+      calcSurface();
+    };
+    renderScenarios();$('#surfaceChem').addEventListener('change',syncSurfaceChemical);
+    ['surfaceActive','surfaceVolume','surfaceArea','coverage'].forEach(id=>$('#'+id).addEventListener('input',calcSurface));syncSurfaceChemical();
+  }
+  function calcCustom(){
+    const c=+$('#customTarget').value,v=+$('#customVolume').value,a=+$('#customActive').value,tm=+$('#customTabletMass').value,err=$('#customError');err.style.display='none';
+    $('#ppmHint').textContent=`Tương đương ${fmt(c*10000,0)} ppm`;$('#tabletMassField').classList.toggle('hidden',customMode!=='tablet');
+    if(!valid(c,v,a)||(customMode==='tablet'&&!valid(tm))||a>100||c>=a){err.style.display='block';return}
+    const grams=c*v/a*1000;let main,sub,rows;
+    if(customMode==='liquid'){
+      const ml=c*v/a*1000;main=`${fmt(ml,1)} ml`;sub=`dung dịch gốc ${fmt(a)}% clo hoạt tính`;
+      rows=[['Lấy',`${fmt(ml,1)} ml dung dịch gốc`],['Pha','Thêm nước sạch cho đủ thể tích thành phẩm'],['Thành phẩm',`${fmt(v)} lít ở nồng độ ${fmt(c)}%`],['Quy đổi',`${fmt(c*10000,0)} ppm clo hoạt tính`]];
+      $('#formulaText').textContent='V₁ = (C₂ × V₂ ÷ C₁) × 1000';$('#formulaExplain').textContent='Chỉ dùng khi nhãn ghi % clo hoạt tính theo thể tích.';
+    }else if(customMode==='tablet'){
+      const exact=grams/tm, pills=Math.ceil(exact);main=`${fmt(pills,0)} viên`;sub=`cần lý thuyết ${fmt(exact,2)} viên (${fmt(grams,2)} g)`;
+      rows=[['Khối lượng viên',`${fmt(tm,3)} g/viên`],['Thành phẩm',`${fmt(v)} lít ở nồng độ ${fmt(c)}%`],['Quy đổi',`${fmt(c*10000,0)} ppm clo hoạt tính`],['Cảnh báo','Chỉ làm tròn viên khi nhãn cho phép chia liều theo viên']];
+      $('#formulaText').textContent='Số viên = [(C × V ÷ A) × 1000] ÷ khối lượng viên';$('#formulaExplain').textContent='Kết quả làm tròn lên; kiểm tra lại hướng dẫn trên nhãn.';
+    }else{
+      main=`${fmt(grams,2)} g`;sub=`hóa chất bột chứa ${fmt(a)}% clo hoạt tính`;
+      rows=[['Cân',`${fmt(grams,2)} g hóa chất`],['Pha','Hòa tan hoàn toàn, thêm nước sạch cho đủ thể tích'],['Thành phẩm',`${fmt(v)} lít ở nồng độ ${fmt(c)}%`],['Quy đổi',`${fmt(c*10000,0)} ppm clo hoạt tính`]];
+      $('#formulaText').textContent='m = (C × V ÷ A) × 1000';$('#formulaExplain').textContent='C: nồng độ cần pha (%); V: lít; A: % clo hoạt tính.';
+    }
+    $('#customMain').textContent=main;$('#customSub').textContent=sub;setList('#customList',rows);
+  }
+  function setupCustom(){
+    $$('[data-custom-mode]').forEach(b=>b.addEventListener('click',()=>{customMode=b.dataset.customMode;$$('[data-custom-mode]').forEach(x=>x.classList.toggle('active',x===b));calcCustom()}));
+    ['customTarget','customVolume','customActive','customTabletMass'].forEach(id=>$('#'+id).addEventListener('input',calcCustom));calcCustom();
+  }
+  function setupCopy(){
+    $$('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const panel=$('#'+b.dataset.copy), text=[...panel.querySelectorAll('.result-main,.result-unit,.result-list li')].map(x=>x.innerText).join('\n');try{await navigator.clipboard.writeText(`CloCalc Y tế\n${text}`);const old=b.textContent;b.textContent='Đã sao chép';setTimeout(()=>b.textContent=old,1400)}catch(e){b.textContent='Không thể sao chép'}}));
+  }
+  tabs();setupFlood();setupSurface();setupCustom();setupCopy();
+  if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
+    addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+  }
+</script>
+</body>
+</html>

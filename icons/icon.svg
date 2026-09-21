@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="130" y1="90" x2="870" y2="930" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B7D76"/>
+      <stop offset="1" stop-color="#043E42"/>
+    </linearGradient>
+    <linearGradient id="drop" x1="350" y1="260" x2="690" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E9FFF9"/>
+      <stop offset="1" stop-color="#A8E8DC"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  <circle cx="512" cy="512" r="352" fill="none" stroke="#7DD8C9" stroke-opacity=".22" stroke-width="28"/>
+  <circle cx="512" cy="512" r="286" fill="#053C40" fill-opacity=".28"/>
+  <path d="M512 219C429 335 318 450 318 598c0 118 87 220 194 220s194-102 194-220c0-148-111-263-194-379Z" fill="#002B2D" opacity=".28"/>
+  <path d="M512 194C429 310 318 425 318 573c0 118 87 220 194 220s194-102 194-220c0-148-111-263-194-379Z" fill="url(#drop)"/>
+  <path d="M474 411h76c13 0 23 10 23 23v88h88c13 0 23 10 23 23v76c0 13-10 23-23 23h-88v88c0 13-10 23-23 23h-76c-13 0-23-10-23-23v-88h-88c-13 0-23-10-23-23v-76c0-13 10-23 23-23h88v-88c0-13 10-23 23-23Z" fill="#075C58"/>
+  <circle cx="770" cy="260" r="68" fill="#F3AA36"/>
+  <path d="M770 221v78M731 260h78" stroke="#FFF7E8" stroke-width="23" stroke-linecap="round"/>
+</svg>
